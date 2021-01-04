@@ -1,13 +1,19 @@
 import React , {useEffect, useState} from 'react'
-import { Box, Button, TextField, Input } from "@material-ui/core";
+import { Box, Button} from "@material-ui/core";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Api from "../services/uploadService"
 
 export default function Upload() {
     const [file, setFile] = useState(null)
+    const [progress, setProgress] = useState(null)
 
     useEffect(() => {
-        Api.upload(file)
+        Api.uploadFile(
+            file, 
+            (event) => 
+                setProgress(
+                  Math.round((100 * event.loaded) / event.total)
+                ))
     }, [file])
 
     const handleSelect = (e) => {
