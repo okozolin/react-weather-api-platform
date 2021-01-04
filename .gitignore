@@ -31,3 +31,4 @@ server-weather-alerts/node_modules
 *.png
 *.gif
 *.jpg
+.eslintcache
