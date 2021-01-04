@@ -7,14 +7,14 @@ export default function Upload() {
     const [file, setFile] = useState(null)
     const [progress, setProgress] = useState(null)
 
-    useEffect(() => {
-        Api.uploadFile(
-            file, 
-            (event) => 
-                setProgress(
-                  Math.round((100 * event.loaded) / event.total)
-                ))
-    }, [file])
+    // useEffect(() => {
+    //     Api.uploadFile(
+    //         file, 
+    //         (event) => 
+    //             setProgress(
+    //               Math.round((100 * event.loaded) / event.total)
+    //             ))
+    // }, [file])
 
     const handleSelect = (e) => {
         console.log("clicked button")
@@ -22,7 +22,7 @@ export default function Upload() {
     }
     console.log("file", file)
     return (
-        <Box>
+        <Box my={4}>
             <Button
                 variant="contained"
                 component="label"
