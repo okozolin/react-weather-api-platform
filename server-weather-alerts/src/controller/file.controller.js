@@ -6,6 +6,8 @@ const upload = async (req, res) => {
         return res.status(400).send({ message: "Please upload a file!" });
       }
   
+      const convertBuffertToString = req.file.buffer.toString('utf8')
+      console.log("--->convertBuffertToString", convertBuffertToString.split(/\n/))
       res.status(200).send({
         message: "Uploaded the file successfully: " + req.file.originalname,
       });
@@ -24,6 +26,7 @@ const upload = async (req, res) => {
   };
 
   const getAlerts = async (req, res) => {
+    res.send([{city: "a1", status: false},{city: "a2", status: true}])
   }
   module.exports = {
     upload,

@@ -7,14 +7,14 @@ export default function Upload() {
     const [file, setFile] = useState(null)
     const [progress, setProgress] = useState(null)
 
-    // useEffect(() => {
-    //     Api.uploadFile(
-    //         file, 
-    //         (event) => 
-    //             setProgress(
-    //               Math.round((100 * event.loaded) / event.total)
-    //             ))
-    // }, [file])
+    useEffect(() => {
+        file && Api.uploadFile(
+            file, 
+            (event) => 
+                setProgress(
+                  Math.round((100 * event.loaded) / event.total)
+                ))
+    }, [file])
 
     const handleSelect = (e) => {
         console.log("clicked button")
@@ -26,7 +26,7 @@ export default function Upload() {
             <Button
                 variant="contained"
                 component="label"
-                color="secondary"
+                style={{backgroundColor: "#118AB2", color: "white"}}
                 startIcon={<CloudUploadIcon />}
             >
                 Upload CSV 

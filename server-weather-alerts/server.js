@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
 initRoutes(app);
+
 let port = 8080;
 app.listen(port, () => {
   console.log(`Running at localhost:${port}`);

@@ -1,6 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/Error';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles({
   table: {
@@ -15,7 +17,7 @@ const alerts = [
         condition: "< -10",
         lastTriggered: "22/10/2020, 15:40",
         duration: "00:05:20",
-        status: "true"
+        status: true
     },
     {
         city: "Ohio, US",
@@ -23,7 +25,47 @@ const alerts = [
         condition: "> 40",
         lastTriggered: "13/10/2020, 10:40",
         duration: "10:40:20",
-        status: "false"
+        status: false
+    },
+    {
+        city: "Washington, US",
+        currentTmp: "27",
+        condition: "> 40",
+        lastTriggered: "13/10/2020, 10:40",
+        duration: "10:40:20",
+        status: false
+    },
+    {
+        city: "New York, US",
+        currentTmp: "27",
+        condition: "> 40",
+        lastTriggered: "13/10/2020, 10:40",
+        duration: "10:40:20",
+        status: true
+    },
+    {
+        city: "Boston, US",
+        currentTmp: "27",
+        condition: "> 40",
+        lastTriggered: "13/10/2020, 10:40",
+        duration: "10:40:20",
+        status: true
+    },
+    {
+        city: "San Fransisco, US",
+        currentTmp: "27",
+        condition: "> 40",
+        lastTriggered: "13/10/2020, 10:40",
+        duration: "10:40:20",
+        status: false
+    },
+    {
+        city: "Las Vegas, US",
+        currentTmp: "27",
+        condition: "> 40",
+        lastTriggered: "13/10/2020, 10:40",
+        duration: "10:40:20",
+        status: false
     }
 ]
 export default function AlertsTable() {
@@ -31,7 +73,7 @@ export default function AlertsTable() {
 
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
                         <TableCell>City</TableCell>
@@ -50,7 +92,9 @@ export default function AlertsTable() {
                             <TableCell align="right">{row.condition}</TableCell>
                             <TableCell align="right">{row.lastTriggered}</TableCell>
                             <TableCell align="right">{row.duration}</TableCell>
-                            <TableCell align="right">{row.status}</TableCell>
+                            <TableCell align="right">
+                                {row.status ? <ErrorIcon style={{color: "red"}}/> : <CheckCircleIcon style={{color: "#06D6A0"}}/>}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
