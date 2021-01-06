@@ -22,8 +22,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 initRoutes(app);
 
+let port = process.env.PORT || 3002;
 app.listen(port, () => {
-  console.log(`Running at localhost:${process.env.CLIENT_PORT}`);
+  console.log(`Running at localhost:${port}`);
 });
 
 module.exports = app;

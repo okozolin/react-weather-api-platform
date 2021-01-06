@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router();
-const controller= require("../src/controller/file.controller")
+const upload = require("../src/controller/upload.controller")
+const getAlerts= require("../src/controller/alerts.controller")
 
 let routes = (app) => {
-  router.post("/upload", controller.upload);
-  router.get("/alerts", controller.getAlerts);
+  router.post("/upload", upload);
+  router.get("/alerts", getAlerts);
 
   app.use(router);
 };

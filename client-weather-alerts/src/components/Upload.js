@@ -3,17 +3,29 @@ import { Box, Button} from "@material-ui/core";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Api from "../services/uploadService"
 
-export default function Upload() {
+export default function Upload({setAlerts}) {
     const [file, setFile] = useState(null)
     const [progress, setProgress] = useState(null)
 
     useEffect(() => {
-        file && Api.uploadFile(
-            file, 
-            (event) => 
-                setProgress(
-                  Math.round((100 * event.loaded) / event.total)
-                ))
+
+        const updateTable = async () => {
+            if (file) {
+
+            const res = await Api.uploadFile(
+                file, 
+                (event) => 
+                    setProgress(
+                      Math.round((100 * event.loaded) / event.total)
+                    ))
+            if (res.status === "succeeded") {
+                const alerts = await Api.getAlerts()
+                setAlerts(alerts.data)    
+            }
+            else console.log("Upload.js: Failed to load file")   
+        }
+    }
+        updateTable()
     }, [file])
 
     const handleSelect = (e) => {

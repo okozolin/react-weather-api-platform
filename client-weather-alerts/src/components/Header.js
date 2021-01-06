@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { Box} from "@material-ui/core";
+import { Box, Typography} from "@material-ui/core";
 import Moment from "react-moment";
+import FaceIcon from "@material-ui/icons/Face";
 
 Moment.globalFormat = "D MMM YYYY";
 
@@ -24,6 +25,15 @@ useEffect(() => {
             bgcolor="#06D6A0" 
             color="#073B4C">
             <Moment format="DD/MM/YYYY HH:mm">{date}</Moment>
+
+            <Box
+                alignItems="center"
+                display="flex"
+                color="#ce285d"
+                >
+                <FaceIcon fontSize="large" />
+                <Typography>oritkozolin</Typography>
+            </Box>
         </Box>
     )
 }

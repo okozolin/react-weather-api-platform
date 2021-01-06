@@ -16,7 +16,17 @@ export default class Api {
             onUploadProgress,
           });
       console.log("-->response", response)  
-      return response.data;
+      return {data: response.data, status: "succeeded"};
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  static async getAlerts() {
+    try {
+      const response = await http.get("/alerts")
+      console.log("-->response", response)  
+      return response;
     } catch (err) {
       throw new Error(err.message);
     }
