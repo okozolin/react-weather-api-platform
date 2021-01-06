@@ -1,38 +1,49 @@
 import React , {useEffect, useState} from 'react'
-import { Box, Button} from "@material-ui/core";
+import { Box, Button, CircularProgress} from "@material-ui/core";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+
 import Api from "../services/uploadService"
 
 export default function Upload({setAlerts}) {
     const [file, setFile] = useState(null)
-    const [progress, setProgress] = useState(null)
+    const [uploaded, setUploaded] = useState(false)
 
     useEffect(() => {
-
         const updateTable = async () => {
             if (file) {
-
-            const res = await Api.uploadFile(
-                file, 
-                (event) => 
-                    setProgress(
-                      Math.round((100 * event.loaded) / event.total)
-                    ))
-            if (res.status === "succeeded") {
-                const alerts = await Api.getAlerts()
-                setAlerts(alerts.data)    
+                const res = await Api.uploadFile(file)
+                if (res.status === "succeeded") {
+                    const alerts = await Api.getAlerts()
+                    setAlerts(alerts.data)
+                    setUploaded(true)    
+                }
+                else {
+                    setUploaded(false) 
+                    console.log("Upload.js: Failed to load file") 
+                }  
             }
-            else console.log("Upload.js: Failed to load file")   
         }
-    }
         updateTable()
     }, [file])
 
+    useEffect(() => {
+        let intervalId
+        const refreshTable = async () => {
+            if (file) {
+            const alerts = await Api.getAlerts()
+            setAlerts(alerts.data)  
+            }
+        }
+        intervalId = setInterval(() => refreshTable(), 60000)
+
+        return () => {
+            clearInterval(intervalId)
+        }
+    }, [uploaded])
+
     const handleSelect = (e) => {
-        console.log("clicked button")
         setFile(e.target.files[0])
     }
-    console.log("file", file)
     return (
         <Box my={4}>
             <Button

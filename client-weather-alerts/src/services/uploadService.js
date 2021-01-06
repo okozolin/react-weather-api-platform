@@ -2,7 +2,7 @@
 import http from "./http"
   
 export default class Api {
-  static async uploadFile(file, onUploadProgress) {
+  static async uploadFile(file) {
     let formData = new FormData();
     formData.append("file", file);
     try {
@@ -13,9 +13,7 @@ export default class Api {
             headers: {
             "Content-Type": "multipart/form-data",
             },
-            onUploadProgress,
           });
-      console.log("-->response", response)  
       return {data: response.data, status: "succeeded"};
     } catch (err) {
       throw new Error(err.message);
@@ -25,7 +23,6 @@ export default class Api {
   static async getAlerts() {
     try {
       const response = await http.get("/alerts")
-      console.log("-->response", response)  
       return response;
     } catch (err) {
       throw new Error(err.message);

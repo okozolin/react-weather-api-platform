@@ -8,12 +8,9 @@ const getAlerts = async (req, res) => {
       throw "Error: no cache table"
     }
     alertsTable = Cache.get("alertsTable")
-  console.log("alertsTable in getAlerts-->", alertsTable)
 
   for (const key in alertsTable) {
       const result = await getWeather(key)
-      console.log("getAlerts--->key", key)
-      console.log("getAlerts--->result", result)
       const tableEntry = csvHelpers.updateTableEntry(result, alertsTable[key])
       alertsTable[key] = {...alertsTable[key],...tableEntry }
   }

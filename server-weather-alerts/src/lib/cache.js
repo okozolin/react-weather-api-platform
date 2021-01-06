@@ -5,12 +5,10 @@ const MINUTES_in_hour = 60;
 const cache = new Map();
 module.exports = {
   has(key) {
-    console.log("key:", key);
     return cache.has(key);
   },
 
   set(key, value) {
-    console.log("setting cache -key: value", key, ":", value);
     return cache.set(key, [value, Date.now()]);
   },
 
