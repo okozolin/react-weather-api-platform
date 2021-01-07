@@ -1,12 +1,19 @@
 const parse = require('csv-parse/lib/sync')
 
-class CsvHelpers {
+class TableHelpers {
     static comparisonOperatorsHash = {
             '<': (a, b) => a < b,
             '>': (a, b) => a > b,
-            '=': (a, b) => a == b,
-            '==': (a, b) => a == b,
+            '=': (a, b) => a === b,
+            '==': (a, b) => a === b,
             '===': (a, b) => a === b
+    }
+
+    static getCondition(condition) {
+        const conditionOperator = condition.charAt(0)
+        const conditionValue = +condition.slice(1)
+
+        return [conditionOperator, conditionValue]
     }
 
     static isAlertActive(tableEntry) {
@@ -23,20 +30,22 @@ class CsvHelpers {
     static initTable(fileContent) {
         let table={}
         const bufferToString = fileContent.toString('utf8')
-        const contentArr = parse(bufferToString.trim(), {
-          columns: ['city', 'conditionOperator'],
-          skip_empty_lines: true
+        const initialTable = parse(bufferToString.trim(), {
+            columns: ['city', 'conditionOperator'],
+            skip_empty_lines: true
         })
         
-        contentArr.shift() // remove table header
-    
-        for(const prop in contentArr){
-            const cond = contentArr[prop].conditionOperator.trim()
-            contentArr[prop].conditionOperator = cond.charAt(0)
-            contentArr[prop].conditionValue = +cond.slice(1)
-            const hash = contentArr[prop].city
+        initialTable.shift() // remove table header
+
+        for(const prop in initialTable){
+            const cond = initialTable[prop].conditionOperator.trim()
+            const [conditionOperator,conditionValue ] = this.getCondition(cond)
+            const map = initialTable[prop].city
+
+            initialTable[prop].conditionOperator = conditionOperator
+            initialTable[prop].conditionValue = conditionValue
             const filledRow = { 
-                ...contentArr[prop], 
+                ...initialTable[prop], 
                 id: null, 
                 condition: cond, 
                 currentTemp: null, 
@@ -44,37 +53,37 @@ class CsvHelpers {
                 duration: 0, 
                 status: false 
             };
-            table[hash] = filledRow
+            table[map] = filledRow
         }
         return table
     }
-    
 
-    static updateTableEntry(result, entry) {
+
+    static updateTableEntry(weather, entry) {
         const tableEntry = {...entry}
-        tableEntry.id = result.id
-        tableEntry.currentTemp = result.main.temp
+        tableEntry.id = weather.id
+        tableEntry.currentTemp = weather.main.temp
         const prevStatus = tableEntry.status
         const currentStatus = this.isAlertActive(tableEntry)
         tableEntry.status = currentStatus
-      
+        
         // status states
         // red ---> red or red ---> green
         if ( prevStatus ) {
-          tableEntry.duration = Date.now() - tableEntry.lastTriggered
+            tableEntry.duration = Date.now() - tableEntry.lastTriggered
         }
         // green ---> red
         else if (!prevStatus && currentStatus) {
-          tableEntry.lastTriggered = Date.now()
-          tableEntry.duration = 0
+            tableEntry.lastTriggered = Date.now()
+            tableEntry.duration = 0
         }
         return tableEntry
-      }
+    }
 
     static sortTable(table) {
         const tableArr = Object.values(table)
         const sortedTable = tableArr.sort((a,b)=> {
-            if (a.status && !b.staus) return -1
+            if (a.status && !b.status) return -1
             if (!a.status && b.status) return 1
             if (a.city < b.city) return -1
             if (a.city > b.city) return 1
@@ -82,7 +91,7 @@ class CsvHelpers {
 
         return sortedTable
     }
-      
+        
 }
 
-module.exports = CsvHelpers;
+module.exports = TableHelpers;
