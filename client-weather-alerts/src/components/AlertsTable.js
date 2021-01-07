@@ -14,7 +14,6 @@ const useStyles = makeStyles({
 
 export default function AlertsTable({alerts}) {
     const classes = useStyles();
-
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table}>
@@ -29,7 +28,7 @@ export default function AlertsTable({alerts}) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {alerts.length != 0 && alerts.map((row) => (
+                    {alerts.length ? alerts.map((row) => (
                         <TableRow key={row.city}>
                             <TableCell>{row.city}</TableCell>
                             <TableCell align="right">{row.currentTemp}</TableCell>
@@ -38,15 +37,15 @@ export default function AlertsTable({alerts}) {
                                {row.lastTriggered && <Moment format="DD/MM/YYYY HH:mm">{row.lastTriggered}</Moment> }                               
                             </TableCell>
                             <TableCell align="right">
-                                {row.duration >0 && (
+                                {row.duration ? (
                                     moment.duration(row.duration).format("HH:mm:ss")
-                                )}
+                                ): null}
                             </TableCell>
                             <TableCell align="right">
                                 {row.status ? <ErrorIcon style={{color: "red"}}/> : <CheckCircleIcon style={{color: "#06D6A0"}}/>}
                             </TableCell>
                         </TableRow>
-                    ))}
+                    )) : null }
                 </TableBody>
             </Table>            
         </TableContainer>

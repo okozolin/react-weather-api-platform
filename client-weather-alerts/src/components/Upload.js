@@ -1,20 +1,17 @@
 import React , {useEffect, useState} from 'react'
-import { Box, Button, CircularProgress} from "@material-ui/core";
+import { Box, Button} from "@material-ui/core";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Api from "../services/api"
+import {SUCCEEDED} from "../constants"
 
-import Api from "../services/uploadService"
-
-export default function Upload({setAlerts}) {
+export default function Upload({setUploaded}) {
     const [file, setFile] = useState(null)
-    const [uploaded, setUploaded] = useState(false)
 
     useEffect(() => {
         const updateTable = async () => {
             if (file) {
                 const res = await Api.uploadFile(file)
-                if (res.status === "succeeded") {
-                    const alerts = await Api.getAlerts()
-                    setAlerts(alerts.data)
+                if (res.status === SUCCEEDED) {
                     setUploaded(true)    
                 }
                 else {
@@ -25,21 +22,6 @@ export default function Upload({setAlerts}) {
         }
         updateTable()
     }, [file])
-
-    useEffect(() => {
-        let intervalId
-        const refreshTable = async () => {
-            if (file) {
-            const alerts = await Api.getAlerts()
-            setAlerts(alerts.data)  
-            }
-        }
-        intervalId = setInterval(() => refreshTable(), 60000)
-
-        return () => {
-            clearInterval(intervalId)
-        }
-    }, [uploaded])
 
     const handleSelect = (e) => {
         setFile(e.target.files[0])
