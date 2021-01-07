@@ -1,8 +1,7 @@
 # Weather Alerts platform
 Platform which alerts regarding extreme temperature change
 
-![Weather app platform](weatherTable.png)
-
+![Weather app platform](weather-table.png)
 ## Created by: Orit Kozolin
 
 <hr>
@@ -11,7 +10,7 @@ Platform which alerts regarding extreme temperature change
 
 ### Basic functionality
 
-- Loader - hide the data, until it is being loaded (for the exercise purposes, show it for  a constant time of 3 seconds)
+- Loader - hide the data, until it is being loaded (show it for  a constant time of 3 seconds)
 
 - A title which will present the current time. formatted as followed: 24/12/2020, 13:40
 - Upload button  - On click, will open a file selection dialog, given a csv file to upload, which will override the current alerts. (See example csv file)

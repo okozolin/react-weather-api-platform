@@ -25,7 +25,7 @@ yarn-error.log*
 node_modules
 client-weather-alerts/node_modules
 server-weather-alerts/node_modules
-*.csv
+
 *.csv#
 *.docx
 *.png
