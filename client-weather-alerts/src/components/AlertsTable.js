@@ -4,8 +4,10 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper}
 import ErrorIcon from '@material-ui/icons/Error';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Moment from "react-moment";
-import moment from 'moment';
+import moment from "moment"
+import momentDurationSetup from 'moment-duration-format';
 
+momentDurationSetup(moment);
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -38,7 +40,7 @@ export default function AlertsTable({alerts}) {
                             </TableCell>
                             <TableCell align="right">
                                 {row.duration ? (
-                                    moment.duration(row.duration).format("HH:mm:ss")
+                                    moment.duration(row.duration).format("HH:mm:ss", { trim: false })
                                 ): null}
                             </TableCell>
                             <TableCell align="right">
