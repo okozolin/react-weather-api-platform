@@ -1,27 +1,59 @@
 # Weather Alerts platform
-Created by: Orit Kozolin, Fullstack Developer
+Platform which alerts regarding extreme temperature change
+
+![Weather app platform](weatherTable.png)
+
+## Created by: Orit Kozolin
+
 <hr>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## App Functional requirenments
 
-## Available Scripts
+### Basic functionality
 
-In the project directory, you can run:
+- Loader - hide the data, until it is being loaded (for the exercise purposes, show it for  a constant time of 3 seconds)
 
-### `npm start`
+- A title which will present the current time. formatted as followed: 24/12/2020, 13:40
+- Upload button  - On click, will open a file selection dialog, given a csv file to upload, which will override the current alerts. (See example csv file)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Alerts table
+    - City: name of a city in the globe.
+    - Condition: a boolean expression, which defines whether the alert is active or not, contains the desired weather condition, see example in the csv file.
+    Can Include only the following conditions: < , >, =.
+    - Last triggered: the last time when the alert status was changed from non active to active, Formatted as followed: (24/12/2020, 13:40).
+    - Status: red icon if the condition is true, green otherwise.
+    - Duration: the elapsed time when the alert was/is in active status.
+(Format: HH:mm:ss, assume no more than 99 hours)
+    - Table should be sorted by active status first (red > green) and by city name.
+The page should be refreshed automatically , with a minimum resolution of 1 minute.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Client: React + Material UI
+- Server: Express (Node)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<hr>
+
+## Getting Started
+
+### Development mode
+
+- For the Server
+
+```bash
+npm start
+```
+
+- For the Client
+
+```bash
+npm start
+```
+
+- ports
+
+  Client: http://localhost:3001
+
+  Server: http://localhost:3002
