@@ -28,7 +28,7 @@ server-weather-alerts/node_modules
 
 *.csv#
 *.docx
-*.png
+
 *.gif
 *.jpg
 .eslintcache
