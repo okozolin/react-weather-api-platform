@@ -10,7 +10,9 @@ function App() {
   const [alerts,setAlerts] = useState([])
   const [uploaded, setUploaded] = useState(false)
   const [loader, setLoader] = useState(false)
-  
+  const hide = (typeof alerts === "object" && !Object.keys(alerts).length)
+  const show =  ! hide && uploaded && !loader
+
   useEffect(() => {
     let intervalId
     const refreshTable = async () => {
@@ -38,7 +40,7 @@ function App() {
       <Box display="flex" justifyContent="center" alignItems="center" m={4}>
       { loader && <CircularProgress />}
       </Box>
-      { uploaded && !loader && <AlertsTable alerts={alerts}/>}
+      { show && <AlertsTable alerts={alerts}/>}
     </Box>
     </>
   );
