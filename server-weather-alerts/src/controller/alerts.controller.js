@@ -5,22 +5,24 @@ const TableHelpers = require("../lib/TableHelpers")
 const getAlerts = async (req, res) => {
   let alertsTable={}
     if (!Cache.has("alertsTable")) {
-      throw "Error: no cache table"
+      res.send({data: [], status: "No cache table"})
     }
-    alertsTable = Cache.get("alertsTable")
+    else {
+      alertsTable = Cache.get("alertsTable")
 
-  for (const key in alertsTable) {
-    try {
+      for (const key in alertsTable) {
+        try {
 
-      const result = await getWeather(key)
-      const tableEntry = TableHelpers.updateTableEntry(result, alertsTable[key])
-      alertsTable[key] = {...alertsTable[key],...tableEntry }
-    } catch(err) {
-      res.send(err)
-    }
+          const result = await getWeather(key)
+          const tableEntry = TableHelpers.updateTableEntry(result, alertsTable[key])
+          alertsTable[key] = tableEntry
+        } catch(err) {
+            res.send(err)
+          }
+      }
+      Cache.set("alertsTable", alertsTable)
+      const sortedTable = TableHelpers.sortTable(alertsTable)
+      res.send(sortedTable)
   }
-  Cache.set("alertsTable", alertsTable)
-  const sortedTable = TableHelpers.sortTable(alertsTable)
-  res.send(sortedTable)
 }
 module.exports = getAlerts

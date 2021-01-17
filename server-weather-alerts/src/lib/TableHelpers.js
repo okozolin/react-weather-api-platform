@@ -6,7 +6,8 @@ class TableHelpers {
             '>': (a, b) => a > b,
             '=': (a, b) => a === b,
             '==': (a, b) => a === b,
-            '===': (a, b) => a === b
+            '===': (a, b) => a === b,
+            '<=' : (a,b) => a <= b
     }
 
     static getCondition(condition) {
