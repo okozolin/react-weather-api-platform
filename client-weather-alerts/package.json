@@ -21,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postbuild": "rm -rf ../server-weather-alerts/public && mv ./build ../server-weather-alerts/public"
   },
   "eslintConfig": {
     "extends": [
